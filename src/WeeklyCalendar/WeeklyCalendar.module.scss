@@ -1,0 +1,40 @@
+.week_container{
+  display: grid;
+  grid-template-columns: .6fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+  width: 100%;
+}
+.time_column_item{
+  background-color: #fff;
+  position: relative;
+  height: 65px;
+}
+.active{
+  background-color: red !important;
+}
+.column_item{
+  height: 65px;
+  border: 1px solid #E6E6E6;
+  border-bottom: 1px solid #E6E6E6;
+  position: relative;
+  background-color: #fafafb;
+}
+.column_item:nth-child(odd){
+  border-bottom: 1px dotted  #E6E6E6;
+}
+.week_container{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  border-radius: 7px;
+}
+.time_item{
+  position: absolute;
+  right: 0;
+  bottom: -11px;
+  z-index: 10;
+  &::after{
+    content: '----';
+    color: red;
+    width: 5px;
+    height: 2px;
+  }
+}
