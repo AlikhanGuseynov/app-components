@@ -44,8 +44,8 @@ export default class WeeklyCalendar extends Component {
     }
 
     getTableCellClass(item) {
-        let cls = [classes.day_column_item, classes.column_item]
-        if(item.select === true){
+        let cls = [classes.column_item]
+        if (item.select === true) {
             cls.push(classes.active)
         }
         return cls.join(' ');
@@ -58,7 +58,8 @@ export default class WeeklyCalendar extends Component {
                     this.getDayTime().map((item, index) => {
                         return (
                             <div id={item.id} onMouseDown={() => this.mouseDown(item)} key={item.id}
-                                 className={this.getTableCellClass(item)}></div>
+                                 className={this.getTableCellClass(item)}>
+                            </div>
                         )
                     })
                 }
@@ -84,6 +85,11 @@ export default class WeeklyCalendar extends Component {
             })
         )
     }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+
+    }
+
 
     render() {
         return (
