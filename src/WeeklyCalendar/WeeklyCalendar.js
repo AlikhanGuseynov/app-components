@@ -3,84 +3,93 @@ import classes from './WeeklyCalendar.module.scss'
 
 export default class WeeklyCalendar extends Component {
 
-    getDayTime() {
+    state = {
+        week: this.getWeekState(),
+        mousedown: {index: null, state: false},
+        mouseup: true,
+        pageY: null,
+    }
+
+    getWeekState(){
         let date = new Date(0, 0, 0, 0, 0, 0, 0);
-        let day = [{id: 0, time: 0 + ':' + 0, select: true}];
-        for (let i = 1; i < 24 * 4; i++) {
-            let item = {id: null, time: null, select: false};
-            date.setMinutes(date.getMinutes() + 15);
-            let h = date.getHours();
-            let m = date.getMinutes();
-            let time = h * 60 + m;
-            item.id = i;
-            item.time = `${Math.trunc(time / 60)}:${time % 60}`;
-            day.push(item)
+        let week = [];
+        for (let i = 0; i < 7; i++) {
+            for(let a=0; a<96; a++){
+                let item = {id: a, dayOfWeek: i, select: false, time: null, addCell: false};
+                date.setMinutes(date.getMinutes() + 15);
+                let h = date.getHours();
+                let m = date.getMinutes();
+                let time = h * 60 + m;
+                item.time = `${Math.trunc(time / 60)}:${time % 60}`;
+                week.push(item);
+            }
         }
-        ;
-        return day;
+        return week;
     }
-
-
-    getTimeColumn(weekItem) {
-        return (
-            <div key={weekItem.day} className={classes.time_column}>
-                {
-                    this.getDayTime().map((item, index) => {
-                        return (
-                            <div key={item.id} className={classes.time_column_item}>
-                                <span draggable="true" className={classes.time_item + ' '}>
-                                 {item.time}
-                                </span>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        )
+    setMouseDown = (item) => {
+        this.setState({mousedown: {index: item.dayOfWeek, state: true}})
     }
-
-    mouseDown(item) {
-        console.log(item)
+    mouseUp = () =>{
+        this.setState({mousedown: {index: null, state: false}}) 
     }
-
-    getTableCellClass(item) {
-        let cls = [classes.day_column_item, classes.column_item]
+    setMouseOver = (item, index) =>{
+        if(item.dayOfWeek !== this.state.mousedown.index){
+            return false;
+        }
+        if(this.state.mousedown.state === false){
+            return false
+        }
+        let week = this.state.week;
+        week[index].select = true;
+        this.setState({week})
+    }
+    addCell = index =>{
+        let week = this.state.week;
+        week[index].addCell = true;
+        this.setState({week})
+    }
+    getTableDay(item, index){
+        let cls = [classes.column_item]
         if(item.select === true){
             cls.push(classes.active)
         }
-        return cls.join(' ');
-    }
-
-    getTable(weekItem) {
+        let addCls = [];
+        if(item.addCell === true){
+            addCls.push(classes.addCell)
+        }
         return (
-            <div key={weekItem.day} className={classes.day_column}>
-                {
-                    this.getDayTime().map((item, index) => {
-                        return (
-                            <div id={item.id} onMouseDown={() => this.mouseDown(item)} key={item.id}
-                                 className={this.getTableCellClass(item)}></div>
-                        )
-                    })
-                }
+            <div 
+                // id={item.id} 
+                key={item.id + '-' + item.dayOfWeek}
+                onMouseDown={ () => this.setMouseDown(item)} 
+                onMouseUp={this.mouseUp}
+                onMouseOver={ () => this.setMouseOver(item, index)}
+                className={cls.join(' ')}
+                onClick={() => this.addCell(index)}
+                >
+                    <div id={item.id + '-' + item.dayOfWeek} className={addCls.join(' ')}>
+                        <div onClick={ (e) => this.setPageY(e) } onMouseDown={() => this.stretchOut(item)} className={classes.addCellGrab} ></div>
+                    </div>
             </div>
         )
     }
 
-    getWeek() {
-        let week = [];
-        for (let i = 0; i < 8; i++) {
-            let item = {id: null, day: null};
-            item.id = i;
-            item.day = i + 1;
-            week.push(item);
-        }
+    stretchOut = (item) => {
+        let id = item.id + '-' + item.dayOfWeek;
+        let block = document.getElementById(id);
+        let height = block.offsetHeight;
+        block.style.height = '40px';
+    }
+
+    setPageY = (event) =>{
+        this.setState({pageY: event.pageY});
+    }
+
+
+    getWeek = () => {
         return (
-            week.map((weekItem, index) => {
-                return (
-                    <div key={weekItem.id}>
-                        {weekItem.id === 0 ? this.getTimeColumn(weekItem) : this.getTable(weekItem)}
-                    </div>
-                )
+            this.state.week.map((item, index) => {
+                return this.getTableDay(item, index) 
             })
         )
     }
