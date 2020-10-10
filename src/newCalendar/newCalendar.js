@@ -4,17 +4,21 @@ import classes from './newCalendar.module.scss'
 export default class NewCalendar extends Component {
   state = {
     layout: [
-      {i: 'a', id: 0, x: 0, y1: 0, y2: 2, h: 2},
-      {i: 'b', id: 1, x: 2, y1: 3, y2: 5, h: 2},
-      {i: 'c', id: 2, x: 4, y1: 5, y2: 15, h: 2}
+      {i: 'a', id: 0, x: 0, y1: 1, y2: 4, h: 2},
+      // {i: 'b', id: 1, x: 0, y1: 5, y2: 7, h: 2},
+      // {i: 'c', id: 2, x: 0, y1: 7, y2: 10, h: 2}
     ],
     mousedown: false,
     pageY1: null,
     pageY2: null,
+    resizingBlock: 0,
   }
 
-  setMouseDown = (item) => {
-    this.setState({mousedown: true})
+  setMouseDown = index => {
+    this.setState({
+      mousedown: true,
+      resizingBlock: index,
+    })
   }
   
   mouseUp = () =>{
@@ -39,8 +43,8 @@ export default class NewCalendar extends Component {
   }
 
   getDayBox(layoutItem, index){
-    let blockPositionY = layoutItem.y * 45 + 'px';
     let blockGridRow = layoutItem.y1 + '/' + layoutItem.y2;
+    console.log(blockGridRow);
     return(
       <div 
         key={layoutItem.id}
@@ -49,7 +53,9 @@ export default class NewCalendar extends Component {
       >
         {layoutItem.i}
         <div className={classes.grap}
-          onClick={(e) => this.setPageY(e)}
+          onClick={(e) => this.setPageY1(e)}
+          onMouseDown={() => this.setMouseDown(index)}
+          onMouseUp={this.mouseUp}
         >
 
         </div>
@@ -58,23 +64,34 @@ export default class NewCalendar extends Component {
   }
 
   setPageY1 = e =>{
-    this.setState({pageY1: e.pageY})
+    this.setState({pageY1: e.pageY});
+  }
+  
+  setHeight = value =>{
+    let layout = this.state.layout;
+    layout[this.state.resizingBlock].y2 = Math.ceil(this.state.pageY2/1) - 2;
+    this.setState({layout})
   }
 
-
-  stretchOut = e =>{
-    // let pageY2 = 
-    this.setState({pageY2: e.pageY})
-    
+  moveMouse = e =>{
+    let pageY2 = e.pageY - this.state.pageY1;
+    if(this.state.mousedown === false){
+      console.log(pageY2);
+      return false;
+    }
+    this.setState({pageY2});
+    this.setHeight(this.state.pageY2)
   }
   
   
   
   render(){
-
     return(
       <div className={classes.container}>
-        <div className={classes.content} onMouseMove = {(e) => this.stretchOut(e) }>
+        <div 
+          className={classes.content} 
+          onMouseMove={(e) => this.moveMouse(e)}
+          >
           {
             this.state.layout.map((layoutItem, index) => {
               return this.getDayBox(layoutItem, index)

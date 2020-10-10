@@ -16,11 +16,11 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(96, 1fr);
+  grid-template-rows: repeat(960, 1px);
 }
 .grap{
   width: 30px;
-  height: 5px;
+  height: 15px;
   border-radius: 5px 5px 0 0;
   cursor: pointer;
   background-color: #ccc;
