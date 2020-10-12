@@ -1,0 +1,50 @@
+.container{
+  max-width: 1193px;
+  width: 100%;
+}
+.review{
+  max-width: 1193px;
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  display: flex;
+  padding: 44px;
+  align-items: center;
+}
+.review_content{
+  margin-left: 38px;
+}
+.content_header{
+  display: flex;
+
+}
+.content_header_left{
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+.review_text{
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  color: #434451;
+}
+.name{
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 22px;
+  color: #434451;
+}
+.status{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #9596A7;
+}
+.content_header_right{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
