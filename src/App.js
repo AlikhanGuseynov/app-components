@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import WeeklyCalendar from './WeeklyCalendar/WeeklyCalendar'
 import Reviews from './Reviews/Reviews'
+import SortAndFilter from './SortAndFilter/SortAndFilter'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
     return (
         <div className="App">
             {/*<WeeklyCalendar />*/}
+            <SortAndFilter />
             <Reviews users={users} />
         </div>
     );
