@@ -18,7 +18,7 @@ function App() {
                 {id: 2, text: 'Панибратская манера', value: 3.7 },
             ],
             date: new Date(),
-            text: 'Dr. Mourad was wonderful, he explained everything i wanted to know , he was knowledgable and was extremely helpful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful.'
+            text: 'Dr. Mourad was wonderful, he explained everything i wanted to know , he was knowledgable and was extremely helpful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful. Front desk ladies where also kind and wonderful.'
         }
     ]
 
