@@ -15,6 +15,18 @@ export default class SortAndFilter extends Component {
             : null
     }
 
+    getFilterList() {
+        return this.state.filterState
+            ? <div>getSortList</div>
+            : null
+    }
+
+    sortStateToggle = () =>{
+        this.setState({sortState: !this.state.sortState })
+    }
+    sortFilterToggle = () =>{
+        this.setState({filterState: !this.state.filterState })
+    }
 
     render() {
         let sortCls = [classes.item]
@@ -29,15 +41,16 @@ export default class SortAndFilter extends Component {
             <div className={classes.container}>
                 <div className={classes.container_left_side}>
                     <div>
-                        <div onClick={() => this.setState({sortState: !this.state.sortState})}
+                        <button onClick={this.sortStateToggle}
                              className={sortCls.join(' ')}>
-                            Сортировка
-                        </div>
+                            <p>Сортировка</p>
+                        </button>
                         {this.getSortList()}
                     </div>
-                    <div onClick={() => this.setState({filterState: !this.state.filterState})}
+                    <div onClick={this.sortFilterToggle}
                          className={filterCls.join(' ')}>
-                        Фильтры
+                        <p>Фильтры</p>
+                        {this.getFilterList()}
                     </div>
                 </div>
                 <div className={classes.search_container}>

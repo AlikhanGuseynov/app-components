@@ -5,9 +5,15 @@
   padding: 15px 0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 200px;
+  overflow: hidden;
 }
 
 .item {
+  width: 100%;
 }
 
 .radio {
@@ -15,12 +21,18 @@
 }
 
 .label {
+  display: block;
   cursor: pointer;
-  padding: 0 25px;
-  margin: 10px 0;
+  padding: 10px 35px;
   width: 100%;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: #9596A7;
+  border-left: 3px solid transparent;
 }
 
 .radio:checked + label {
-  background-color: red;
+  background: rgba(95, 201, 193, 0.1);
+  border-left: 3px solid #5FC9C1;
 }
